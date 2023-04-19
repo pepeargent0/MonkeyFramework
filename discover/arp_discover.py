@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from scapy.all import ARP, Ether, srp
+from scapy.all import ARP, Ether, srp,ls
 from typing import Iterable
 
 
@@ -8,7 +8,7 @@ from typing import Iterable
 class DiscoverARP:
     ip: str
     mac: str
-
+    mac_dst: str
     def __post_init__(self):
         self._types = {"ip": str, "mac": str}
 
@@ -23,7 +23,9 @@ def arp_discover(ip_addr: str = '127.0.0.1', mask: str = 24) -> Iterable[Discove
         discovered_hosts.append(
             DiscoverARP(
                 ip=received.psrc,
-                mac=received.hwsrc
+                mac=received.hwdst,
+                mac_dst=received.hwsrc
             )
         )
+    print(discovered_hosts)
     return discovered_hosts
