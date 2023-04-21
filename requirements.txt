@@ -128,7 +128,7 @@ ply==3.11
 pop-transition==1.1.2
 pre-commit==3.0.4
 prompt-toolkit==3.0.28
-protobuf==3.12.4
+protobuf==3.18.3
 psutil==5.9.0
 ptyprocess==0.7.0
 pyasn1==0.4.8
