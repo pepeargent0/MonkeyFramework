@@ -69,7 +69,7 @@ identify==2.5.18
 idna==3.3
 importlib-metadata==4.6.4
 iniconfig==2.0.0
-ipython==7.31.1
+ipython==8.10.0
 itsdangerous==2.1.2
 jedi==0.18.0
 jeepney==0.7.1
