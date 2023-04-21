@@ -1,14 +1,16 @@
-from subprocess import call
+import subprocess
 from time import sleep
 
-from scapy.all import Ether, sendp, IP, RandMAC
+from scapy.all import Ether, sendp, IP, RandMAC, conf
 import threading
+
+conf.promisc = True
 
 
 def mac_spoofing(iface: str, mac: str):
-    call(['ifconfig', iface, 'down'], check=True)
-    call(['ifconfig', iface, 'hw', 'ether', mac], check=True)
-    call(['ifconfig', iface, 'up'], check=True)
+    subprocess.check_call(['ifconfig', iface, 'down'])
+    subprocess.check_call(['ifconfig', iface, 'hw', 'ether', mac])
+    subprocess.check_call(['ifconfig', iface, 'up'])
 
 
 def mac_flooding_threading(iface: str):
