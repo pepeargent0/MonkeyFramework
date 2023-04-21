@@ -1,5 +1,29 @@
 # MonkeyFramework
 
+## instalacion
+```
+git clone https://github.com/pepeargent0/MonkeyFramework
+cd MonkeyFramework
+pip install -r requirements.txt
+```
+### COMO SE USA
+```
+se crea un archivo .py
+y luego se ejecuta como root, esto se debe a 
+que mucho porque se usan paquetes raw que solo se puede 
+crear siendo root
+```
+
+### ARP DISCOVER
+```
+from discover.arp_discover import arp_discover
+
+ip = '192.168.1.11'
+mask = 24
+for host in arp_discover(ip_addr=ip, mask=mask):
+    print(host)
+```
+
 ### MAC Flooding
 ```
 from attack.leyer_2.mac import mac_flooding
