@@ -1,31 +1,31 @@
+from typing import Generator
+from multiprocessing import Pool
 from dataclasses import dataclass
+from scapy.all import ARP, Ether, srp, conf, get_if_hwaddr
 
-from scapy.all import ARP, Ether, srp,ls
-from typing import Iterable
+conf.promisc = True
 
 
 @dataclass
 class DiscoverARP:
     ip: str
     mac: str
-    mac_dst: str
-    def __post_init__(self):
-        self._types = {"ip": str, "mac": str}
 
 
-def arp_discover(ip_addr: str = '127.0.0.1', mask: str = 24) -> Iterable[DiscoverARP]:
+def process_packet(packet):
+    send, received = packet
+    return DiscoverARP(ip=received.psrc, mac=received.hwsrc)
+
+
+def arp_discover(ip_addr: str = '127.0.0.1', mask: int = 24, timeout: float = 2, processes: int = 4) \
+        -> Generator[DiscoverARP, None, None]:
     arp = ARP(pdst=ip_addr + '/' + str(mask))
-    ether = Ether(dst="ff:ff:ff:ff:ff:ff")
+    ether = Ether(dst="ff:ff:ff:ff:ff:ff", src=get_if_hwaddr(conf.iface))
     packet = ether / arp
-    hosts = srp(packet, timeout=4, verbose=0)[0]
-    discovered_hosts = []
-    for send, received in hosts:
-        discovered_hosts.append(
-            DiscoverARP(
-                ip=received.psrc,
-                mac=received.hwdst,
-                mac_dst=received.hwsrc
-            )
-        )
-    print(discovered_hosts)
-    return discovered_hosts
+    discovered_ips = set()
+    with Pool(processes=processes) as pool:
+        for host in pool.imap_unordered(process_packet, srp(packet, timeout=timeout, verbose=0)[0]):
+            if host.ip not in discovered_ips:
+                discovered_ips.add(host.ip)
+                yield host
+
