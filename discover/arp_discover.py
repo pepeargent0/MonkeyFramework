@@ -28,4 +28,3 @@ def arp_discover(ip_addr: str = '127.0.0.1', mask: int = 24, timeout: float = 2,
             if host.ip not in discovered_ips:
                 discovered_ips.add(host.ip)
                 yield host
-

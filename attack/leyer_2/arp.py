@@ -1,6 +1,8 @@
-from scapy.all import ARP, Ether, send
+from scapy.all import ARP, Ether, send, conf
 from time import sleep
 import threading
+
+conf.promisc = True
 
 
 def arp_poison(ip_src: str, mac_src: str, ip_dst: str, mac_dst: str):
