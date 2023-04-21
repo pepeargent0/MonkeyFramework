@@ -88,7 +88,7 @@ linkedin-scraper==2.11.0
 linkedin-search-posts-bot==1.0.0
 -e git+ssh://git@github.com/facebookresearch/llama.git@2845af9b7f09effe27081a0c42d59f1e66cd5c20#egg=llama
 louis==3.20.0
-lxml==4.8.0
+lxml==4.9.1
 lz4==3.1.3+dfsg
 macaroonbakery==1.3.1
 Mako==1.2.4
