@@ -8,14 +8,14 @@ for host in arp_discover(ip_addr=ip, mask=mask):
     print(host_tmp)"""
 
 import os
-from protocols.smb import SambaClient
 
-client = SambaClient(server="10.129.105.31")
+from protocols.redis import RDIClient
+
+rdi_client = RDIClient(server="your_rdp_server", username="your_username", password="your_password")
+
 try:
-    client.connect()
-    files = client.list_shares()
-    print("Files in the share:", files)
-
+    rdi_client.connect()
+    # Do something with the connected RDP session
 
 finally:
-    client.close()
+    rdi_client.disconnect()
