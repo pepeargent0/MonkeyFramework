@@ -1,1 +1,7 @@
-pysmb
+pysmb~=1.2.9.1
+pyrdp~=0.1.6
+pytest~=7.2.1
+psutil~=5.9.0
+requests~=2.31.0
+pydantic~=1.10.5
+tqdm~=4.66.1
