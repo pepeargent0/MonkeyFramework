@@ -1,7 +1,25 @@
+# Ejemplo de uso
+from time import sleep
 
-from discover.struture import Scrapper
+from attack.leyer_2.mac import mac_spoofing, mac_flooding, mac_duplication
 
-_site = 'http://10.129.230.191'
-_file = '/Users/pepeargentoo/directory-list-2.3-small.txt'
-scrapper = Scrapper(_site)
-scrapper.get_directorys(_file)
+if __name__ == "__main__":
+    # Ejemplos de uso
+    iface = "en0"
+
+    # 1. MAC Spoofing
+    print("=== MAC Spoofing ===")
+    spoof_attack = mac_spoofing(iface, "00:11:22:33:44:55")
+    sleep(5)
+    spoof_attack.restore_original_mac()
+
+    # 2. MAC Flooding
+    print("\n=== MAC Flooding ===")
+    flood_attack = mac_flooding(iface, packet_rate=500, duration=10)
+    sleep(12)  # Esperar que termine
+
+    # 3. MAC Duplication
+    print("\n=== MAC Duplication ===")
+    dup_attack = mac_duplication(iface, "aa:bb:cc:dd:ee:ff")
+    sleep(5)
+    dup_attack.stop_duplication()
