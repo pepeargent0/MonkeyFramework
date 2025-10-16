@@ -7,7 +7,7 @@ import netifaces
 from attack.leyer_2.arp import NetworkDiscovery, ARPInspection, AdvancedARPSpoofing, ARPCachePoisoning, ARPFlooding, \
     ARPTableOverflow
 from discover import os
-
+from os import geteuid
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -242,7 +242,7 @@ class ARPAttackDemo:
 
 def main():
     """Main execution function"""
-    system = sys.platform.system()
+    system = sys.platform
 
     # Auto-detect interface
     try:
@@ -253,7 +253,7 @@ def main():
         iface = "en0" if system == 'Darwin' else "eth0"
 
     # Check permissions
-    if os.geteuid() != 0:
+    if geteuid() != 0:
         print("❌ This tool requires root privileges. Run with sudo.")
         sys.exit(1)
 
